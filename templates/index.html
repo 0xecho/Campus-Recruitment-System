@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="m-2"><h4>Auth</h4></div>
+<div class="m-2"><a class="btn btn-light" href="{% url 'Auth_Student_list' %}">Student Listing</a></div>
+<div class="m-2"><a class="btn btn-light" href="{% url 'Auth_Company_list' %}">Company Listing</a></div>
+<div class="m-2"><a class="btn btn-light" href="{% url 'Auth_Admin_list' %}">Admin Listing</a></div>
+<div class="m-2"><a class="btn btn-light" href="{% url 'Auth_Role_list' %}">Role Listing</a></div>
+<div class="m-2"><a class="btn btn-light" href="{% url 'Auth_Client_list' %}">Client Listing</a></div>
+{% endblock %}

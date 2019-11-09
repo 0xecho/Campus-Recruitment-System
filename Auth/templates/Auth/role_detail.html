@@ -1,0 +1,17 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'Auth_Role_list' %}">
+    Role Listing
+    </a>
+</p>
+    
+<table class="table">
+    <tr><td>id</td><td>{{ object.id }}</td></tr>
+</table>
+
+
+{% endblock %}
