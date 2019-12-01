@@ -30,6 +30,13 @@ class CompanyAdminForm(forms.ModelForm):
     class Meta:
         model = models.Company
         fields = "__all__"
+    def save(self,commit=True):
+        x = super().save(commit=False)
+        # print(x.password)
+        x.client.set_password(x.client.password)
+        x.client.save()
+        x.save()
+        return x
 
 
 class CompanyAdmin(admin.ModelAdmin):
@@ -70,6 +77,8 @@ class RoleAdminForm(forms.ModelForm):
         fields = "__all__"
 
 
+
+
 class RoleAdmin(admin.ModelAdmin):
     form = RoleAdminForm
     list_display = [
@@ -105,3 +114,8 @@ admin.site.register(models.Company, CompanyAdmin)
 admin.site.register(models.Admin, AdminAdmin)
 admin.site.register(models.Role, RoleAdmin)
 admin.site.register(models.Client, ClientAdmin)
+admin.site.register(models.Department)
+admin.site.register(models.University)
+admin.site.register(models.Invites)
+# admin.site.register(models.Client, ClientAdmin)
+

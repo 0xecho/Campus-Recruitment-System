@@ -10,9 +10,14 @@
 </p>
     
 <table class="table">
-    <tr><td>last_updated</td><td>{{ object.last_updated }}</td></tr>
-    <tr><td>created</td><td>{{ object.created }}</td></tr>
+    <tr><td>Comapany name</td><td>{{ object.name }}</td></tr>
+    <tr><td>Phone</td><td>{{ object.Phone }}</td></tr>
+    <tr><td>Email</td><td>{{ object.email }}</td></tr>
+    <tr><td>Website</td><td><a href="{{ object.website }}">{{ object.website }}</a></td></tr>
+    <tr><td>Description</td><td>{{ object.description }}</td></tr>
 </table>
+{% if request.user.company.id == object.id %}
 <a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>
+{% endif %}
 
 {% endblock %}

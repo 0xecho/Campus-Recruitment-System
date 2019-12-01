@@ -1,8 +1,91 @@
 
 {% extends "base.html" %}
 {% block content %}
+<div class="content">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card ">
+            <div class="card-header">
+                <h4 class="card-title"> Students Listing</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table tablesorter " id="">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Department
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th class="text-center">
+                                    Phone
+                                </th>
+                                {%if request.user.role|stringformat:"s" == "Company" %}
+                                <th class="text-center">
+                                    Invite
+                                </th>
+                                {%endif%}
+                            </tr>
+                        </thead>
+                        <tbody>
 {% for object in object_list %}
-  <div class="m-2"><a href="{{object.get_absolute_url}}">{{object}}</a></div>
+                            <tr>
+                                <td>
+                                    <a href="{%url "Auth_Student_detail" object.pk %}">{{object.firstname}} {{object.lastname}}</a>
+                                </td>
+                                <td>
+                                    {{object.department.name}}
+                                </td>
+                                <td>
+                                    {{object.email}}
+                                </td>
+                                <td class="text-center">
+                                    {{object.Phone}}
+                                </td>
+                                {%if request.user.role|stringformat:"s" == "Company" %}
+                                <td class="text-center">
+                                {%if request.user.company.pk in object.invited_by%}
+                                                    
+                                    <p>invited</p>
+                                </td>
+                                {%else%}
+                                    <a href="" onclick="invite({{request.user.company.pk}},{{object.pk}})">invite</a>
+                                </td>
+                                {%endif%}
+                                {%endif%}
+                            </tr>
 {% endfor %}
+
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<p id="abd"></p>
 <div><a class="btn btn-primary" href="{% url 'Auth_Student_create' %}">Create a new Student</a></div>
+<script type="text/javascript">
+    function invite(from_comp,to_stud)
+    {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+             // alert(this.responseText);
+            // document.getElementById("abd").append( this.responseText );
+            demo.showNotification('top','left')
+          };
+
+        xhttp.open("GET", "invite/"+from_comp+"/"+to_stud+"/");
+        xhttp.send();
+        return false;
+    }
+
+</script>
 {% endblock %}

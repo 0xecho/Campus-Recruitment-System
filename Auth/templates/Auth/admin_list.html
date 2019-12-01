@@ -1,8 +1,57 @@
 
 {% extends "base.html" %}
 {% block content %}
+<div class="content">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card ">
+            <div class="card-header">
+                <h4 class="card-title"> Companies Listing</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table tablesorter " id="">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Country
+                                </th>
+                                <th>
+                                    City
+                                </th>
+                                <th class="text-center">
+                                    Salary
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
 {% for object in object_list %}
-  <div class="m-2"><a href="{{object.get_absolute_url}}">{{object}}</a></div>
+                            <tr>
+                                <td> 
+                                    <a href="{%url "Auth_Admin_detail" object.pk %}">{{object.client}}</a>
+                                </td>
+                                <td>
+                                    {{object.client}}
+                                </td>
+                                <td>
+                                    {{object.client}}
+                                </td>
+                                <td class="text-center">
+                                    {{object.client}}
+                                </td>
+                            </tr>
 {% endfor %}
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 <div><a class="btn btn-primary" href="{% url 'Auth_Admin_create' %}">Create a new Admin</a></div>
 {% endblock %}

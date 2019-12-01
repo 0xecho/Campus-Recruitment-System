@@ -1,10 +1,15 @@
 from django.views import generic
 from django.contrib.auth import login
 from django.shortcuts import redirect
+from rest_framework import viewsets
+from django.http import JsonResponse
+from watson import search as watson
+
 
 from . import models
 from . import forms
 from .mixins import *
+from .serializers import *
 
 class StudentListView(LoginRequiredMixin, generic.ListView):
     model = models.Student
@@ -13,7 +18,7 @@ class StudentListView(LoginRequiredMixin, generic.ListView):
 
 class StudentCreateView(generic.CreateView):
     model = models.Client
-    form_class = forms.StudentSignUpForm
+    # form_class = forms.StudentSignUpForm
     template_name = "registration/signup.html"
 
     def get_context_data(self, **kwargs):
@@ -107,10 +112,52 @@ class ClientUpdateView(SystemRequiredMixin, generic.UpdateView):
     form_class = forms.ClientForm
     pk_url_kwarg = "pk"
     
+class UniversityListView(generic.ListView):
+    model = models.University
 
-def debug(request,pk):
+class UniversityCreateView(AdminRequiredMixin, generic.CreateView):
+    model = models.University
+    form_class = forms.ClientForm
 
-    print(list(request.user))
-    for i in request:
-        print(i)
+class UniversityDetailView(generic.DetailView):
+    model = models.University
+    form_class = forms.ClientForm
+
+def invite(request,comp,stud):
+
+    try:
+        comp = models.Company.objects.get(pk=comp)
+        stud = models.Student.objects.get(pk=stud)
+        invitation = models.Invites()
+        invitation.from_comp = comp
+        invitation.to_stud = stud
+        invitation.save()
+        return JsonResponse({"message":"Invited Succesfully"})
+    except Exception as e:
+        # return JsonResponse({"message":"Error Inviting Student"})
+        return JsonResponse(e.message)
+        print(e)
+        
+class Notificatons(StudentRequiredMixin, generic.ListView):
+    model = models.Invites
+    
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(to_stud=self.request.user.student.id)
+        return qs
+
+class IndexPage(generic.TemplateView):
+
+    template_name = "index.html"
+
+    extra_context = {
+        "number_of_students":len(models.Student.objects.all()),
+        "number_of_companies":len(models.Company.objects.all()),
+        # "number_of_openings":len(model.Student.objects.all()).
+    }
+    
+
+def debug(request):
+    print(123)
+    print(watson.search("student"))
     return "ABDE"

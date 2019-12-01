@@ -1,19 +1,50 @@
 
 {% extends "base.html" %}
 {% load static %}
+
+    {%block navbar%}{%endblock%}
+    {%block sidebar%}{%endblock%}
 {% block content %}
         
-<p>
-        <a class="" href="#">
-        Signup
-        </a>
-</p>
-<form method="POST">
-{%csrf_token%}
-{{form.as_p}}
-<input type="submit" value="Gogogo!" />
+<div class="row">
+                    <div class="col-md-5 mx-auto align-middle">
+                        <div class="card ">
+                            <div class="card-header">
+                                <h5 class="title">Register</h5>
+                            </div>
+                            <div class="card-body">
+                                    {{form.errors}}
+                                <form method="POST">
+                                        {% csrf_token%}
+                                        <div class="col-md-8 px-md-1">
+                                            <div class="form-group">
+                                                <label>Username</label>
+                                                <input name="username" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 pl-md-1">
+                                            <div class="form-group">
+                                                <label>Password</label>
+                                                <input name="password1" type="password" class="form-control" >
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-md-16">{{form.password1.help_text}}</div>
+                                        <div class="col-md-8 pl-md-1">
+                                            <div class="form-group">
+                                                <label>Password Confirmation</label>
+                                                <input name="password2" type="password" class="form-control" >
 
-</form>     
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="next" value="{{next}}">
+                                        <a href="{% url 'login' %}">Already have an account?</a><br><br>
+                                <button type="submit" class="btn btn-fill btn-primary">Submit</button>
+                                </form>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
 
 
 {% endblock %}

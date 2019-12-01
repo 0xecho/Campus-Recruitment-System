@@ -1,29 +1,38 @@
-
 {% extends "base.html" %}
-{% load static %}
-{% block content %}
-        
-<p>
-        <a class="" href="#">
-        Login
-        </a>
-</p>
-        {{ form.errors }}
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
-
-<input type="submit" value="login">
-<input type="hidden" name="next" value="{{ next }}">
-</form>
-
-{% endblock %}
+  {% load static %}
+  {%block navbar%}{%endblock%}
+  {%block sidebar%}{%endblock%}
+  {% block content %}
+      <div class="row">
+          <div class="col-md-4 mx-auto align-middle">
+            <div class="card ">
+              <div class="card-header">
+                <h5 class="title">Login</h5>
+              </div>
+              <div class="card-body">
+                  {%for i,j in form.errors.items%}
+                    {{j}}
+                  {%endfor%}
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token%}
+                    <div class="col-md-8 px-md-1">
+                      <div class="form-group">
+                        <label>Username</label>
+                        <input name="username" type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-8 pl-md-1">
+                      <div class="form-group">
+                        <label>Password</label>
+                        <input name="password" type="password" class="form-control" >
+                      </div>
+                    </div>
+                    <input type="hidden" name="next" value="{{next}}">
+                    <a href="{% url 'Auth_Student_create' %}">Don't have an account yet?</a><br><br>
+                <button type="submit" class="btn btn-fill btn-primary">Submit</button>
+                </form>
+                  </div>
+              </div>
+            </div>
+          </div>
+  {% endblock %}

@@ -1,0 +1,55 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="content">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card ">
+            <div class="card-header">
+                <h4 class="card-title"> University Listing</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table tablesorter " id="">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Location
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+{% for object in object_list %}
+
+                            <tr>
+                                <td>
+                                    <a href="{%url "University_detail" object.pk %}">{{object.name}}</a>
+                                </td>
+                                <td>
+                                    {{object.location}}
+                                </td>
+                                <td>
+                                    {{object.email}}
+                                </td>
+                            </tr>
+{% endfor %}
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{%if request.user.role == "Admin" or request.user.role == "System" %}
+<div><a class="btn btn-primary" href="{% url 'Auth_Company_create' %}">Create a new University</a></div>
+{%endif%}
+{% endblock %}

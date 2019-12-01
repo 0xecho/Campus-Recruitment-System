@@ -1,0 +1,26 @@
+{%extends "base.html"%}
+
+{%block content%}
+        <div class="col-md-12">
+        <div class="card ">
+            <div class="card-header">
+                <h4 class="card-title"> You have been invited to work at</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table tablesorter " id="">
+                        {% for object in object_list %}
+                            <tr>
+                                <td>
+                                    <a href="{%url "Auth_Company_detail" object.from_comp.pk %}">{{object.from_comp.name}}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{%endblock%}

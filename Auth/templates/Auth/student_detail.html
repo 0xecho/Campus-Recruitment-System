@@ -3,17 +3,149 @@
 {% load static %}
 {% block content %}
     
-<p>
+<!-- <p>
     <a class="btn btn-light" href="{% url 'Auth_Student_list' %}">
     Student Listing
     </a>
 </p>
-    
-<table class="table">
-    <tr><td>Phone</td><td>{{ object.Phone }}</td></tr>
-    <tr><td>created</td><td>{{ object.created }}</td></tr>
-    <tr><td>last_updated</td><td>{{ object.last_updated }}</td></tr>
-</table>
-<a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>
+     -->
+<div class="content">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="title">Edit Profile</h5>
+                            </div>
+                            <div class="card-body">
+                                <form method="POST">
+                                    <div class="row">
+                                        <div class="col-md-5 pr-md-1">
+                                            <div class="form-group">
+                                                <label>University</label>
+                                                <input name="university" type="text" class="form-control" placeholder="University" value="{{object.university.name}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 px-md-1">
+                                            <div class="form-group">
+                                                <label>Username</label>
+                                                <input name="username" type="text" class="form-control" placeholder="Username" value="{{object.client}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 pl-md-1">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Email address</label>
+                                                <input name="email" type="email" class="form-control" placeholder="Email Address" value="{{object.email}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 pr-md-1">
+                                            <div class="form-group">
+                                                <label>First Name</label>
+                                                <input name="firstname" type="text" class="form-control" placeholder="First Name" value="{{object.firstname}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 pl-md-1">
+                                            <div class="form-group">
+                                                <label>Last Name</label>
+                                                <input name="lastname" 
+                                                type="text" class="form-control" placeholder="Last Name" value="{{object.lastname}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 pr-md-1">
+                                            <div class="form-group">
+                                                <label>Phone</label>
+                                                <input name="Phone" type="text" class="form-control" placeholder="Phone" value="{{object.Phone}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Website</label>
+                                                <input name="website" type="text" class="form-control" placeholder="Website" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Github</label>
+                                                <input name="github" type="text" class="form-control" placeholder="Home Address" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>LinkedIn</label>
+                                                <input name="linkedin" type="text" class="form-control" placeholder="Home Address" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Facebook</label>
+                                                <input type="text" class="form-control" placeholder="Home Address" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label>About Me</label>
+                                                <textarea name="summary" rows="4" cols="80" class="form-control" placeholder="Here can be your description" value="Mike">{{object.summary}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-fill btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-user">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <div class="author">
+                                        <div class="block block-one"></div>
+                                        <div class="block block-two"></div>
+                                        <div class="block block-three"></div>
+                                        <div class="block block-four"></div>
+                                        <a href="">
+                                            <img class="avatar" src="data:image/png;base64,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">
+                                            <h5 class="title">{{object.firstname}} {{object.lastname}}</h5>
+                                        </a>
+                                        <p class="description">
+                                            {{object.department.name}} Student
+                                        </p>
+                                    </div>
+                                </p>
+                                <div class="card-description">
+                                    {{object.summary}}
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="button-container">
+                                    <button href="{{object.linkedin}}" class="btn btn-icon btn-round btn-linkedin">
+                                        <i class="fab fa-linkedin"></i>
+                                    </button>
+                                    <button href="{{object.github}}" class="btn btn-icon btn-round btn-github">
+                                        <i class="fab fa-github"></i>
+                                    </button>
+                                    <button href="{{object.facebook}}" class="btn btn-icon btn-round btn-facebook">
+                                        <i class="fab fa-facebook"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 {% endblock %}

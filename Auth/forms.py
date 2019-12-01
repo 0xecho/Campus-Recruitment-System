@@ -7,10 +7,8 @@ from . import models
 class StudentForm(forms.ModelForm):
     class Meta:
         model = models.Student
-        fields = [
-            "Phone",
-            # "client",
-        ]
+        exclude =["client"]
+
 class StudentSignUpForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):

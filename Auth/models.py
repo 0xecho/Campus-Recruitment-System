@@ -3,13 +3,37 @@ from django.urls import reverse
 from django.contrib.auth.models import AbstractUser
 
 
+class University(models.Model):
+
+    name = models.CharField(max_length=100)
+    # logo = models.ma
+    email = models.EmailField(null=True)
+    location = models.CharField(max_length=100)
+
+class Department(models.Model):
+
+    name = models.CharField(max_length=100)
+    # logo = models.ma
+    email = models.EmailField(null=True)
+
 class Student(models.Model):
 
     #  Relationships
     client = models.OneToOneField("Auth.Client", on_delete=models.CASCADE)
 
     #  Fields
+    firstname = models.CharField(max_length=30)
+    lastname = models.CharField(max_length=30)
     Phone = models.CharField(max_length=15)
+    email = models.EmailField(default="")
+    website = models.CharField(blank=True,default="",max_length=30)
+    linkedin = models.CharField(blank=True,default="",max_length=30)
+    github = models.CharField(blank=True,default="",max_length=30)
+    facebook = models.CharField(blank=True,default="",max_length=30)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE,null=True)
+    university = models.ForeignKey(University, on_delete=models.CASCADE,null=True)
+    summary = models.TextField(blank=True,default="")
+    # photo = mo
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
 
@@ -25,11 +49,23 @@ class Student(models.Model):
     def get_update_url(self):
         return reverse("Auth_Student_update", args=(self.pk,))
 
+    def get_invites(self):
+        return Invites.objects.filter(to_stud=self.pk)
+
+    def invited_by(self):
+        return [i.from_comp.pk for i in self.get_invites()]
+    
 
 class Company(models.Model):
 
     #  Relationships
     client = models.OneToOneField("Auth.Client", on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    Phone = models.CharField(max_length=15,null=True)
+    email = models.EmailField(default="")
+    website = models.CharField(blank=True,default="",max_length=100)
+    linkedin = models.CharField(blank=True,default="",max_length=100)
+    description = models.TextField(blank=True,default="")
 
     #  Fields
     last_updated = models.DateTimeField(auto_now=True, editable=False)
@@ -52,6 +88,7 @@ class Admin(models.Model):
 
     #  Relationships
     client = models.OneToOneField("Auth.Client", on_delete=models.CASCADE)
+    name = models.CharField(max_length=100,default="")
 
     #  Fields
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -119,3 +156,8 @@ class Client(AbstractUser):
 
     def get_update_url(self):
         return reverse("Auth_Client_update", args=(self.pk,))
+
+class Invites(models.Model):
+
+    from_comp = models.ForeignKey(Company,on_delete=models.CASCADE)
+    to_stud = models.ForeignKey(Student,on_delete=models.CASCADE)
